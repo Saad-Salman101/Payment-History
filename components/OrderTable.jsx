@@ -65,8 +65,8 @@ const OrderTable = () => {
                     className="border-b-2 border-silver text-golden pb-3"
                   >
                     {column.render('Header')}
-                    <span>
-                      {column.isSorted ? (column.isSortedDesc ? ' 🔽' : ' 🔼') : ''}
+                    <span className='text-black'>
+                      {column.isSorted ? (column.isSortedDesc ? ' ▼' : ' ▲') : ''}
                     </span>
                   </th>
                 ))}
