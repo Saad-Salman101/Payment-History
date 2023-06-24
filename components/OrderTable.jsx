@@ -1,10 +1,17 @@
-/* eslint-disable @next/next/no-img-element */
 import React from 'react';
 import { useTable, useSortBy, usePagination } from 'react-table';
-import data from './data.json'; // Assuming the JSON data is in the same directory
+import data from './data.json';
 
 const OrderTable = () => {
-  // Define table columns
+  const modifiedData = React.useMemo(
+    () =>
+      data.map((row) => ({
+        ...row,
+        'Payment amount': `${row['Payment amount']}    GBP`,
+      })),
+    []
+  );
+
   const columns = React.useMemo(
     () => [
       { Header: 'ORDER ID', accessor: 'Orderid' },
@@ -19,7 +26,6 @@ const OrderTable = () => {
     []
   );
 
-  // Create table instance and apply necessary hooks
   const {
     getTableProps,
     getTableBodyProps,
@@ -37,14 +43,13 @@ const OrderTable = () => {
   } = useTable(
     {
       columns,
-      data,
-      initialState: { pageIndex: 0, pageSize: 25 }, // Initial pagination state
+      data: modifiedData,
+      initialState: { pageIndex: 0, pageSize: 25 },
     },
     useSortBy,
     usePagination
   );
 
-  // Render the table component
   return (
     <div className='relative overflow-hidden'>
       <img src='/assets//MainLogo.png' className='absolute top-28 right-[-750px]' alt='' />
@@ -54,7 +59,7 @@ const OrderTable = () => {
         <div className='text-[18px] mt-4 mb-10'>In the purchase history section, you can review and manage all your Zimo orders. </div>
       </div>
       <div className='w-full flex flex-col items-center'>
-        <table {...getTableProps()} className="table w-[90%]">
+        <table {...getTableProps()} className='table w-[90%]'>
           <thead>
             {headerGroups.map((headerGroup) => (
               <tr key={headerGroup.id} {...headerGroup.getHeaderGroupProps()} className=''>
@@ -62,12 +67,10 @@ const OrderTable = () => {
                   <th
                     key={column.id}
                     {...column.getHeaderProps(column.getSortByToggleProps())}
-                    className="border-b-2 border-silver text-golden pb-3"
+                    className='border-b-2 border-silver text-golden pb-3'
                   >
                     {column.render('Header')}
-                    <span className='text-black'>
-                      {column.isSorted ? (column.isSortedDesc ? ' ▼' : ' ▲') : ''}
-                    </span>
+                    <span className='text-black'>{column.isSorted ? (column.isSortedDesc ? ' ▼' : ' ▲') : ''}</span>
                   </th>
                 ))}
               </tr>
@@ -83,12 +86,10 @@ const OrderTable = () => {
                       key={cell.id}
                       {...cell.getCellProps()}
                       className={`p-3 ${
-                        ['TicketEntries', 'PaymentMethods', 'Payment amount'].includes(cell.column.id)
-                          ? 'pl-10'
-                          : ''
+                        ['TicketEntries', 'PaymentMethods', 'Payment amount'].includes(cell.column.id) ? 'pl-10' : ''
                       }`}
                     >
-                      <div className="ml-2">{cell.render('Cell')}</div>
+                      <div className='ml-2'>{cell.render('Cell')}</div>
                     </td>
                   ))}
                 </tr>
@@ -96,7 +97,7 @@ const OrderTable = () => {
             })}
           </tbody>
         </table>
-        <div className="pagination mt-5">
+        <div className='pagination mt-5'>
           <button onClick={() => gotoPage(0)} disabled={!canPreviousPage} className='m-3'>
             {'<<'}
           </button>
