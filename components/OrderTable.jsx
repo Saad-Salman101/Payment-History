@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import React from 'react';
 import { useTable, useSortBy, usePagination } from 'react-table';
 import data from './data.json';
@@ -51,15 +52,15 @@ const OrderTable = () => {
   );
 
   return (
-    <div className='relative overflow-hidden'>
-      <img src='/assets//MainLogo.png' className='absolute top-28 right-[-750px]' alt='' />
+    <div className='relative md:overflow-x-hidden overflow-x-auto'>
+      <img src='/assets//MainLogo.png' className='absolute md:top-28 top-60 md:right-[-750px] right-[-400px]' alt='' />
       <img src='/assets/PURCHASEHISTORY.png' className='absolute top-[34rem] right-1' alt='' />
       <div className='ml-16'>
         <div className='text-golden uppercase text-[25px] mt-20'>purchase history</div>
         <div className='text-[18px] mt-4 mb-10'>In the purchase history section, you can review and manage all your Zimo orders. </div>
       </div>
       <div className='w-full flex flex-col items-center'>
-        <table {...getTableProps()} className='table w-[90%]'>
+        <table {...getTableProps()} className='table w-[80%] md:w-[100%] ml-[32rem] md:ml-0'>
           <thead>
             {headerGroups.map((headerGroup) => (
               <tr key={headerGroup.id} {...headerGroup.getHeaderGroupProps()} className=''>
